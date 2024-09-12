@@ -5,7 +5,7 @@ def main():
     salario_mensal = float(input("Digite o valor do salário mensal: "))
     horas_trabalhadas = float(input("Digite a quantidade de horas trabalhadas na jornada diária contratada: "))
     horas_extras = float(input("Digite a quantidade de horas extras: "))
-    mes_vigente = input("Digite o mês vigente: ")
+    mes_vigente = int(input("Digite o mês vigente: "))
 
     # Conecta ao servidor
     with xmlrpc.client.ServerProxy("http://localhost:8000/") as proxy:

@@ -3,6 +3,12 @@ import time
 import socket
 
 def calcular_pagamento(salario_mensal, horas_trabalhadas, horas_extras, mes_vigente):
+    tempo_processamento = time.time()
+    
+    # Cálculo do décimo terceiro salário
+    if mes_vigente == 12:
+        salario_mensal += salario_mensal
+
     # Cálculo do valor da hora trabalhada
     valor_hora = salario_mensal / (horas_trabalhadas * 30)
     
@@ -26,9 +32,9 @@ def calcular_pagamento(salario_mensal, horas_trabalhadas, horas_extras, mes_vige
     valor_total = salario_mensal + valor_horas_extras + dsr - inss
     
     # Exibe o tempo de processamento e o IP do cliente
-    tempo_processamento = time.time()
+    tempo_processamento = time.time() - tempo_processamento
     ip_cliente = socket.gethostbyname(socket.gethostname())
-    print(f"Tempo de processamento: {tempo_processamento:.2f} segundos")
+    print(f"Tempo de processamento: {tempo_processamento:f} segundos")
     print(f"IP do cliente: {ip_cliente}")
 
     return {
@@ -42,3 +48,4 @@ server = SimpleXMLRPCServer(("localhost", 8000))
 print("Servidor pronto para receber chamadas...")
 server.register_function(calcular_pagamento, "calcular_pagamento")
 server.serve_forever()
+
