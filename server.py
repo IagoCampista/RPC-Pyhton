@@ -4,10 +4,6 @@ import socket
 
 def calcular_pagamento(salario_mensal, horas_trabalhadas, horas_extras, mes_vigente):
     tempo_processamento = time.time()
-    
-    # Cálculo do décimo terceiro salário
-    if mes_vigente == 12:
-        salario_mensal += salario_mensal
 
     # Cálculo do valor da hora trabalhada
     valor_hora = salario_mensal / (horas_trabalhadas * 30)
@@ -16,7 +12,12 @@ def calcular_pagamento(salario_mensal, horas_trabalhadas, horas_extras, mes_vige
     valor_horas_extras = horas_extras * valor_hora * 1.5
     
     # Cálculo do descanso semanal remunerado (DSR)
-    dsr = (valor_horas_extras / 6)
+        ##considerenado 22 dias úteis e 4 dias de descanso
+    dsr = ((valor_horas_extras * horas_extras) / 22) * 4
+
+    # Cálculo do décimo terceiro salário
+    if mes_vigente == 12:
+        salario_mensal += salario_mensal
     
     # Cálculo da contribuição ao INSS
         # primeira faixa do inss - 1412*0.075 = 105.9
@@ -24,7 +25,7 @@ def calcular_pagamento(salario_mensal, horas_trabalhadas, horas_extras, mes_vige
         # terceira faixa do inss - (4000.03 - 2666.68) * 0.12 = 160
         # quarta faixa do inss - (7786.02 - 4000.03 ) * 0.14 = 530.03
         
-    if salario_mensal <= 1212.00:
+    if salario_mensal <= 1412.00:
         inss = salario_mensal * 0.075
     elif salario_mensal <= 2666.68:
         inss = ((salario_mensal - 1412) * 0.09) + 105.9 
